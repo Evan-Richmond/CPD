@@ -76,7 +76,9 @@ def plot_synthetic_data_separate(data, change_points_info):
 # Data generation parameters
 N = 1000
 dims = 5
-change_points_info = {'indices': [300, 600], 'count': 2}
+indices = [300,600]
+cpcount = 2
+change_points_info = {'indices': indices, 'count': cpcount}
 rv_params = [
     [{'dist': 'normal', 'mu': 0, 'sigma': 1}, {'dist': 'uniform', 'low': 0, 'high': 5}, {'dist': 'normal', 'mu': 5, 'sigma': 2}],
     [{'dist': 'uniform', 'low': -5, 'high': 0}, {'dist': 'normal', 'mu': 2, 'sigma': 1}, {'dist': 'uniform', 'low': 5, 'high': 10}]
@@ -131,6 +133,8 @@ plt.figure(figsize=(14, 6))
 plt.plot(scores, label='Change Point Score')
 plt.scatter(np.arange(len(y_test)), y_test * max(scores), c='red', label='True Change Points', marker='x')
 plt.axhline(y=np.mean(scores) + 2*np.std(scores), color='r', linestyle='--', label='Threshold')
+for ind in indices:
+    plt.axvline(x=ind,color='g',linestyle='dashdot',label='Generated Change Points' if ind == indices[0] else '')
 plt.legend()
 plt.title('Change Point Scores with Threshold and True Change Points')
 plt.xlabel('Time')
